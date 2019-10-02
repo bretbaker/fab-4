@@ -1,10 +1,14 @@
 // booleans for button click conditional
-let footballClicked = true;
+let footballClicked = false;
 let baseballClicked = false;
 let basketballClicked = false;
 let soccerClicked = false;
+let hockeyClicked = false;
+let slipClick = false;
+let openClick = false;
 
 // this function will generate data tables depending on which sport the user has selected once we import the ajax logic
+let liveOddsContent = document.querySelector(".left-two-thirds-container");
 const conditionalTableGen = () => {
   liveOddsContent = document.querySelector(".left-two-thirds-container");
   liveOddsContent.innerHTML = '';
@@ -24,26 +28,27 @@ const conditionalTableGen = () => {
     sportHeader.innerHTML = "Basketball";
   } else if (soccerClicked) {
     sportHeader.innerHTML = "Soccer";
+  } else if (hockeyClicked) {
+    sportHeader.innerHTML = "Hockey";
   }
   liveOddsContent.appendChild(sportHeader);
   liveOddsContent.appendChild(document.createElement("hr"));
+  let count = 0;
   for (let i = 0; i < 8; i++) {
+    // start of table
     let newTable = document.createElement("table");
     newTable.setAttribute("class", "live-odds-table");
+    // table head row
     let newTableRow = document.createElement("tr");
     let newColumn = document.createElement("th");
     newColumn.setAttribute("colspan", "2");
+    newColumn.innerHTML = "Game";
     newTableRow.appendChild(newColumn);
     newColumn = document.createElement("th");
-    newColumn.innerHTML = "Spread";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("th");
-    newColumn.innerHTML = "Win";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("th");
-    newColumn.innerHTML = "Total";
+    newColumn.innerHTML = "Head-to-Head";
     newTableRow.appendChild(newColumn);
     newTable.appendChild(newTableRow);
+    // table body row 1
     newTableRow = document.createElement("tr");
     newColumn = document.createElement("td");
     newColumn.innerHTML = "Team";
@@ -52,15 +57,12 @@ const conditionalTableGen = () => {
     newColumn.innerHTML = "Score";
     newTableRow.appendChild(newColumn);
     newColumn = document.createElement("td");
-    newColumn.innerHTML = "Spread";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = "Win";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = "Total";
+    newColumn.setAttribute("class", "available-bet");
+    count += 1;
+    newColumn.innerHTML = "Line " + count;
     newTableRow.appendChild(newColumn);
     newTable.appendChild(newTableRow);
+    // table body row 2
     newTableRow = document.createElement("tr");
     newColumn = document.createElement("td");
     newColumn.innerHTML = "Team";
@@ -69,21 +71,30 @@ const conditionalTableGen = () => {
     newColumn.innerHTML = "Score";
     newTableRow.appendChild(newColumn);
     newColumn = document.createElement("td");
-    newColumn.innerHTML = "Spread";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = "Win";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = "Total";
+    newColumn.setAttribute("class", "available-bet");
+    count += 1;
+    newColumn.innerHTML = "Line " + count;
     newTableRow.appendChild(newColumn);
     newTable.appendChild(newTableRow);
     liveOddsContent.appendChild(newTable);
   };
+  // logic that determines what text goes in the bet content container
+  let availableBets = document.getElementsByClassName("available-bet");
+
+  for (let i = 0; i < availableBets.length; i++) {
+    document.getElementsByClassName("available-bet")[i].onclick = () => {
+      console.log(document.getElementsByClassName("available-bet")[i].innerHTML);
+    };
+  };
+};
+
+// opacity function
+const opacity = () => {
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.style.opacity = 1;
 }
 
 // refresh button will update the live odds to the current data every time it is clicked
-let liveOddsContent = document.querySelector(".left-two-thirds-container");
 const refreshBtn = () => {
   let refreshButton = document.createElement("div");
   refreshButton.setAttribute("class", "refresh-button");
@@ -93,7 +104,7 @@ const refreshBtn = () => {
   liveOddsContent.appendChild(refreshButton);
 }
 
-// two functions for join modal pop-up
+// functions for join modal pop-up
 // open join modal
 document.getElementById("join-link").onclick = () => {
   document.getElementById("joinModal").style.display = "flex";
@@ -103,7 +114,8 @@ document.getElementsByClassName("close")[0].onclick = () => {
   document.getElementById("joinModal").style.display = "none";
 };
 
-// two functions for login modal pop-up
+
+// functions for login modal pop-up
 // open login modal
 document.getElementById("login-link").onclick = () => {
   document.getElementById("loginModal").style.display = "flex";
@@ -141,23 +153,34 @@ document.getElementById("login-button").onclick = () => {
   document.getElementById("loginModal").style.display = "none";
 };
 
-// THIS IS A TEMPORARY FINCTION WE NEED TO FIGURE OUT THE AJAX LOGIC
-const tableData = () => {
-  // THIS IS WHERE THE API LOGIC WILL GO
+// AJAX LOGIC
+let sportData;
+const tableData = (sport) => {
+  
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(JSON.parse(this.response));
+      console.log(JSON.parse(this.responseText));
+      // console.log(JSON.parse(this.responseText.data));
     }
   };
-  // this is the starting endpoint where we need to figure out the correct url paths for the data we want to obtain
-  // xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  
+  if (sport === "none") {
+    xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  } else if (sport === "football") {
+    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=americanfootball_nfl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  } else if (sport === "baseball") {
+    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=baseball_mlb&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  } else if (sport === "basketball") {
+    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=basketball_nba&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  } else if (sport === "soccer") {
+    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=soccer_epl&region=uk&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  } else if (sport === "hockey") {
+    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=icehockey_nhl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  } 
 
-  // this is a starting nfl football endpoint where we need to figure out the correct url paths for nffl football data
-  xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=americanfootball_nfl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
   xhttp.send();
 };
-tableData();
 
 // football table generator
 const footballTables = () => {
@@ -165,7 +188,11 @@ const footballTables = () => {
   baseballClicked = false;
   basketballClicked = false;
   soccerClicked = false;
-  conditionalTableGen();
+  hockeyClicked = false;
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.style.opacity = 0;
+  setTimeout(conditionalTableGen, 300);
+  setTimeout(opacity, 300);
 };
 
 // soccer table generator
@@ -174,7 +201,11 @@ const soccerTables = () => {
   baseballClicked = false;
   basketballClicked = false;
   soccerClicked = true;
-  conditionalTableGen();
+  hockeyClicked = false;
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.style.opacity = 0;
+  setTimeout(conditionalTableGen, 300);
+  setTimeout(opacity, 300);
 };
 
 // baseball table generator
@@ -183,7 +214,11 @@ const baseballTables = () => {
   baseballClicked = true;
   basketballClicked = false;
   soccerClicked = false;
-  conditionalTableGen();
+  hockeyClicked = false;
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.style.opacity = 0;
+  setTimeout(conditionalTableGen, 300);
+  setTimeout(opacity, 300);
 };
 
 // basketball table generator
@@ -192,42 +227,101 @@ const basketballTables = () => {
   baseballClicked = false;
   basketballClicked = true;
   soccerClicked = false;
-  conditionalTableGen();
+  hockeyClicked = false;
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.style.opacity = 0;
+  setTimeout(conditionalTableGen, 300);
+  setTimeout(opacity, 300);
+};
+
+// basketball table generator
+const hockeyTables = () => {
+  footballClicked = false;
+  baseballClicked = false;
+  basketballClicked = false;
+  soccerClicked = false;
+  hockeyClicked = true;
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.style.opacity = 0;
+  setTimeout(conditionalTableGen, 300);
+  setTimeout(opacity, 300);
 };
 
 // load live football odds as default on home page
 window.onload = () => {
-  footballTables();
+  liveOddsContent = document.querySelector(".left-two-thirds-container");
+  liveOddsContent.innerHTML = '';
+  let welcomeText = document.createElement("h1");
+  welcomeText.setAttribute("class", "welcome-text");
+  welcomeText.innerHTML = "Welcome!";
+  liveOddsContent.appendChild(welcomeText);
+  liveOddsContent.appendChild(document.createElement("hr"));
+  welcomeText = document.createElement("h1");
+  welcomeText.setAttribute("class", "welcome-text");
+  welcomeText.innerHTML = "Select a sport above to view live odds!";
+  liveOddsContent.appendChild(welcomeText);
+  liveOddsContent.style.opacity = 1;
+  tableData("none");
 };
 
 // load live football odds when football button is clicked
 document.getElementById("football-button").onclick = () => {
+  tableData("football");
   footballTables();
 };
 
 // load live soccer odds when soccer button is clicked
 document.getElementById("soccer-button").onclick = () => {
+  tableData("soccer");
   soccerTables();
 };
 
 // load live baseball odds when baseball button is clicked
 document.getElementById("baseball-button").onclick = () => {
+  tableData("baseball");
   baseballTables();
 };
 
 // load live basketball odds when basketball button is clicked
 document.getElementById("basketball-button").onclick = () => {
+  tableData("basketball");
   basketballTables();
+};
+
+// load live hockey odds when hockey button is clicked
+document.getElementById("hockey-button").onclick = () => {
+  tableData("hockey");
+  hockeyTables();
+};
+
+// function to make text white again in bet content container
+const fadeBetContent = () => {
+  document.getElementById("bets-content-container").style.opacity = 1;
+};
+
+// function to make text fade in
+const textAppear = (string) => {
+  document.getElementById("select-option").innerHTML = string;
 };
 
 // these two function will toggle between the bet slip and the open bets tab on the right side of the homepage
 // toggle to bet slip
 document.getElementById("bet-slip-header").onclick = () => {
+  slipClick = true;
+  openClick = false;
   document.getElementById("bet-slip-header").setAttribute("style", "background-color: rgba(255, 255, 255, 0.4)");
   document.getElementById("open-bets-header").setAttribute("style", "background-color: none");
+  document.getElementById("bets-content-container").style.opacity = 0;
+  setTimeout(fadeBetContent, 300);
+  setTimeout(function() { textAppear("No Bets Selected") }, 300);
 };
 // toggle to open bets
 document.getElementById("open-bets-header").onclick = () => {
+  openClick = true;
+  slipClick = false;
   document.getElementById("open-bets-header").setAttribute("style", "background-color: rgba(255, 255, 255, 0.4)");
   document.getElementById("bet-slip-header").setAttribute("style", "background-color: none");
+  document.getElementById("bets-content-container").style.opacity = 0;
+  setTimeout(fadeBetContent, 300);
+  setTimeout(function() { textAppear("No Open Bets") }, 300);
 };
