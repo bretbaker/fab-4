@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link href="https://fonts.googleapis.com/css?family=Turret+Road&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/3a51ec4eb7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../styles/style.css">
+  <title>Sample Design</title>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav-1-background">
+    <nav class="nav-1-container">
+      <h1 class="app-name">Fab 4 Sportsbook</h1>
+      <nav class="acct-links-container">
+        <p id="join-link" class="acct-links">Join</p>
+        <p id="login-link" class="acct-links">Login</p>
+      </nav>
+    </nav>
+  </nav>
+
+  <!-- Join Modal -->
+  <div id="joinModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Fab 4 Sportsbook</h2>
+      </div>
+      <span id="close-join-modal" class="close">&times;</span>
+      <div class="modal-body">
+        <h3>Create an Account</h3>
+      </div>
+      <div class="modal-footer">
+        <form action="">
+          <br>
+          First Name:
+          <br>
+          <input id="join-first-name" type="text">
+          <br><br>
+          Last Name:
+          <br>
+          <input id="join-last-name" type="text">
+          <br><br>
+          Date of Birth: (MM-DD-YYYY)
+          <br>
+          <input id="join-date-of-birth" type="text">
+          <br><br>
+          Phone Number:
+          <br>
+          <input id="join-phone-number" type="text">
+          <br><br>
+          Email:
+          <br>
+          <input id="join-email" type="email">
+          <br><br>
+          Password:
+          <br>
+          <input id="join-password" type="password">
+          <br><br>
+          Confirm Password:
+          <br>
+          <input id="join-confirm-password" type="password">
+          <br><br>
+          <div id="create-acct-button">
+            <p>Register</p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+  
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Fab 4 Sportsbook</h2>
+      </div>
+      <span id="close-login-modal" class="close">&times;</span>
+      <div class="modal-body">
+        <h3>Welcome Back!</h3>
+      </div>
+      <div class="modal-footer">
+        <form action="">
+          <br>
+          Email:
+          <br>
+          <input id="login-email" type="email">
+          <br><br>
+          Password:
+          <br>
+          <input id="login-password" type="password">
+          <br><br>
+          <div id="login-button">
+            <p>Login</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+  </div>
+
+  <!-- Horizontal Divider -->
+  <div class="horizontal-divider"></div>
+
+  <!-- Sports Options Row -->
+  <div class="sports-options-container">
+    <div id="football-button" class="sport-button" value="1">
+      <i class="fas fa-football-ball"></i>
+      <br>
+      <p class="sport-button-text">Football</p>
+    </div>
+    <div id="baseball-button" class="sport-button" value="2">
+      <i class="fas fa-baseball-ball"></i>
+      <br>
+      <p class="sport-button-text">Baseball</p>
+    </div>
+    <div id="basketball-button" class="sport-button" value="3">
+      <i class="fas fa-basketball-ball"></i>
+      <br>
+      <p class="sport-button-text">Basketball</p>
+    </div>
+    <div id="soccer-button" class="sport-button" value="4">
+      <i class="fas fa-futbol"></i>
+      <br>
+      <p class="sport-button-text">Soccer</p>
+    </div>  
+  </div>
+
+  <!-- Horizontal Divider -->
+  <div class="horizontal-divider"></div>
+
+  <!-- Main Page Content -->
+  <div class="main-content-container">
+    <!-- Left 2/3 Container -->
+    <div class="left-two-thirds-container">      
+    </div>
+    <!-- Vertical Divider -->
+    <div class="vertical-divider"></div>
+    <!-- Right 1/3 Container -->
+    <div class="right-one-third-container">
+      <div class="bets-header-container">
+        <h1 id="bet-slip-header">Bet Slip</h1>
+        <h1 id="open-bets-header">Open Bets</h1>
+      </div>
+      <div class="bet-slip-content-container">
+        <h1 id="select-option">Select Option Above</h1>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

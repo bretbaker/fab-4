@@ -1,0 +1,406 @@
+/* Elements ----------------------------------------------- */
+
+body {
+  /* background-color: #e5e5e5; */
+  background-image: linear-gradient(to right, #23374d, #e5e5e5, #23374d);
+}
+
+table, td {
+  border: solid 1px;
+}
+
+input {
+  width: 250px;
+  text-align: center;
+}
+
+/* Classes ------------------------------------------------- */
+
+.nav-1-background {
+  height: 80px;
+  width: 100%;
+  background-color: dodgerblue;
+  box-shadow: 0 3px 3px black;
+}
+
+.nav-1-container {
+  height: 65px;
+  width: 960px;
+  margin: 0 auto;
+  padding-top: 15px;
+}
+
+.app-name {
+  font-family: 'Turret Road', cursive;
+  color: white;
+  font-size: 3rem;
+  display: inline-block;
+  text-shadow: 2px 2px 2px black;
+}
+
+.acct-links-container {
+  height: 50px;
+  width: 150px;
+  float: right;
+  padding-top: 15px;
+}
+
+.acct-links {
+  color: white;
+  font-family: 'Turret Road', cursive;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 1px black;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} .acct-links:hover {
+  cursor: pointer;
+  transform: scale(1.25, 1.25);
+} .acct-links:active {
+  transform: scale(1.35, 1.35);
+}  
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 400px;
+  font-family: 'Turret Road', cursive;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  float: right;
+  margin-right: 5px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  text-align: center;
+  font-size: 2rem;
+  padding: 5px;
+  text-shadow: 1px 1px 1px black;
+  background-color: dodgerblue;
+  color: white;
+}
+
+.modal-body {
+  padding: 10px;
+  background-color: white;
+  border-bottom: solid 1px black;
+}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: white;
+  color: black;
+  line-height: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.horizontal-divider {
+  height: 5px;
+  width: 960px;
+  margin: 0 auto;
+  margin-top: 15px;
+  background-image: linear-gradient(to right, rgba(229,229,229,0), #23374d, rgba(229,229,229,0));
+}
+
+.sports-options-container {
+  height: 95px;
+  width: 960px;
+  margin: 0 auto;
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.sport-button {
+  height: 75px;
+  padding-top: 20px;
+  width: 120px;
+  background-color: dodgerblue;
+  border-radius: 5px;
+  color: white;
+  font-family: 'Turret Road', cursive;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+  display: inline-block;
+  box-shadow: 3px 3px 3px black;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} .sport-button:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} .sport-button:active {
+  transform: scale(1.2, 1.2);
+}
+
+.fas {
+  font-size: 2rem;
+}
+
+.sport-button-text {
+  margin-top: 10px;
+}
+
+.main-content-container {
+  width: 960px;
+  margin: 0 auto;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-two-thirds-container {
+  width: 590px;
+  display: inline-block;
+  background-color: dodgerblue;
+  color: white;
+  font-family: 'Turret Road', cursive;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px black;
+}
+
+.refresh-button {
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 100%;
+  float: right;
+  background-color: #23374d;
+  color: white;
+  box-shadow: 0 3px 3px black;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} .refresh-button:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} .refresh-button:active {
+  transform: scale(1.2, 1.2);
+}
+
+.vertical-divider {
+  width: 5px;
+  display: inline-block;
+  background-image: linear-gradient(to bottom, rgba(229,229,229,0), #23374d, rgba(229,229,229,0))
+}
+
+.live-odds-header {
+  font-size: 2rem;
+  /* text-align: center; */
+  text-shadow: 1px 1px 1px black;
+}
+
+.live-odds-table {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  line-height: 1.5rem;
+  background-color: white;
+  color: black;
+}
+
+.right-one-third-container {
+  width: 280px;
+  height: 100%;
+  padding: 10px;
+  background-color: #23374d;
+  border-radius: 5px;
+  color: white;
+  font-family: 'Turret Road', cursive;
+  box-shadow: 3px 3px 3px black;
+  display: inline-block;
+}
+
+.bets-header-container {
+  display: flex;
+  justify-content: space-evenly;
+  text-shadow: 1px 1px 1px black;
+  font-size: 1.5rem;
+  padding-bottom: 10px;
+  border-bottom: solid white 2px;
+  margin-bottom: 20px;
+}
+
+.bet-slip-content-container {
+  width: 95%;
+  margin: 0 auto;
+  /* text-shadow: 0.5px 0.5px 0.5px black;  */
+  font-weight: bold;
+  line-height: 2rem;
+}
+
+.bet-label {
+  display: inline-block;
+}
+
+.bet-type {
+  float: right;
+}
+
+.bet-quantity {
+  display: inline-block;
+}
+
+.bet-quantity-ticker {
+  float: right;
+}
+
+.bq-ticker-elements {
+  display: inline-block;
+}
+
+.plus:hover {
+  cursor: pointer;
+}
+
+.minus:hover {
+  cursor: pointer;
+}
+
+.bet-total-label {
+  display: inline-block;
+}
+
+.bet-total-num {
+  float: right;
+}
+
+/* IDs ------------------------------------------------------ */
+
+#join-link {
+  display: inline-block;
+}
+
+#login-link {
+  float: right;
+}
+
+#sport-header {
+  /* text-align: center; */
+  font-size: 2rem;
+  text-shadow: 1px 1px 1px black;
+}
+
+#select-option {
+  text-align: center;
+}
+
+#bet-slip-header {
+  display: inline-block;
+  background-color: none;
+  border-radius: 5px;
+  padding: 10px;
+  transition-property: background-color, transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} #bet-slip-header:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} #bet-slip-header:active {
+  transform: scale(1.2, 1.2);
+}
+
+#open-bets-header {
+  display: inline-block;
+  padding: 10px;
+  background-color: none;
+  border-radius: 5px;
+  transition-property: background-color, transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} #open-bets-header:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} #open-bets-header:active {
+  transform: scale(1.2, 1.2);
+}
+
+#create-acct-button {
+  background-color: dodgerblue;
+  color: white;
+  font-size: 1.5rem;
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 1px black;
+  box-shadow: 3px 3px 3px black;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} #create-acct-button:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} #create-acct-button:active {
+  transform: scale(1.2, 1.2);
+}
+
+#login-button {
+  background-color: dodgerblue;
+  color: white;
+  font-size: 1.5rem;
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 1px black;
+  box-shadow: 3px 3px 3px black;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} #login-button:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} #login-button:active {
+  transform: scale(1.2, 1.2);
+}
