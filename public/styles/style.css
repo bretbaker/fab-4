@@ -404,3 +404,14 @@ input {
 } #login-button:active {
   transform: scale(1.2, 1.2);
 }
+
+.login-form input[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  background-color: dodgerblue;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+}
