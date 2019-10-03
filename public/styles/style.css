@@ -261,11 +261,13 @@ input {
   line-height: 1.5rem;
   background-color: white;
   color: black;
+  font-weight: bold;
 }
 
 .available-bet {
   transition-property: background-color;
   transition-duration: 100ms;
+  font-family: sans-serif;
 } .available-bet:hover {
   cursor: pointer;
   background-color: rgba(30, 144, 255, 0.3);
@@ -434,4 +436,19 @@ input {
   transform: scale(1.1, 1.1);
 } #login-button:active {
   transform: scale(1.2, 1.2);
+}
+
+#footer {
+  width: 960px;
+  margin: 20px auto;
+}
+
+#footer-link {
+  color: white;
+  font-family: sans-serif;
+  text-decoration: none;
+} #footer-link:hover {
+  text-decoration: underline;
+} #footer-link:active {
+  color: dodgerblue;
 }

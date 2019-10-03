@@ -6,6 +6,79 @@ let soccerClicked = false;
 let hockeyClicked = false;
 let slipClick = false;
 let openClick = false;
+let textAlready = false;
+
+// AJAX LOGIC
+let sportData;
+
+const footballAjax = () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      sportData = JSON.parse(this.responseText).data;
+      console.log(sportData);
+      console.log(sportData[0].teams);
+      console.log(sportData[0].sites[0].odds.h2h);
+    }
+  };
+  // xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=americanfootball_nfl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", false);
+  xhttp.send();
+  setTimeout(conditionalTableGen, 300);
+};
+const baseballAjax = () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      sportData = JSON.parse(this.responseText).data;
+      console.log(sportData);
+    }
+  };
+  // xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=baseball_mlb&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", false);
+  xhttp.send();
+  setTimeout(conditionalTableGen, 300);
+};
+const basketballAjax = () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      sportData = JSON.parse(this.responseText).data;
+      console.log(sportData);
+    }
+  };
+  // xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=basketball_nba&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", false);
+  xhttp.send();
+  setTimeout(conditionalTableGen, 300);
+};
+const soccerAjax = () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      sportData = JSON.parse(this.responseText).data;
+      console.log(sportData);
+    }
+  };
+  // xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=soccer_epl&region=uk&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", false);
+  xhttp.send();
+  setTimeout(conditionalTableGen, 300);
+};
+const hockeyAjax = () => {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      sportData = JSON.parse(this.responseText).data;
+      console.log(sportData);
+    }
+  };
+  // xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
+  xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=icehockey_nhl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", false);
+  xhttp.send();
+  setTimeout(conditionalTableGen, 300);
+};
+
 
 // this function will generate data tables depending on which sport the user has selected once we import the ajax logic
 let liveOddsContent = document.querySelector(".left-two-thirds-container");
@@ -33,57 +106,69 @@ const conditionalTableGen = () => {
   }
   liveOddsContent.appendChild(sportHeader);
   liveOddsContent.appendChild(document.createElement("hr"));
-  let count = 0;
-  for (let i = 0; i < 8; i++) {
+ 
+  for (let i = 0; i < sportData.length; i++) {
+    
     // start of table
     let newTable = document.createElement("table");
     newTable.setAttribute("class", "live-odds-table");
+    
     // table head row
     let newTableRow = document.createElement("tr");
     let newColumn = document.createElement("th");
-    newColumn.setAttribute("colspan", "2");
-    newColumn.innerHTML = "Game";
+    newColumn.innerHTML = moment.unix(sportData[i].commence_time).format('MMMM Do YYYY, h:mm:ss a');
     newTableRow.appendChild(newColumn);
     newColumn = document.createElement("th");
     newColumn.innerHTML = "Head-to-Head";
     newTableRow.appendChild(newColumn);
     newTable.appendChild(newTableRow);
+    
     // table body row 1
     newTableRow = document.createElement("tr");
     newColumn = document.createElement("td");
-    newColumn.innerHTML = "Team";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = "Score";
+    newColumn.innerHTML = sportData[i].teams[0];
     newTableRow.appendChild(newColumn);
     newColumn = document.createElement("td");
     newColumn.setAttribute("class", "available-bet");
-    count += 1;
-    newColumn.innerHTML = "Line " + count;
+    newColumn.innerHTML = sportData[i].sites[0].odds.h2h[0];
     newTableRow.appendChild(newColumn);
     newTable.appendChild(newTableRow);
+    
     // table body row 2
     newTableRow = document.createElement("tr");
     newColumn = document.createElement("td");
-    newColumn.innerHTML = "Team";
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = "Score";
+    newColumn.innerHTML = sportData[i].teams[1];
     newTableRow.appendChild(newColumn);
     newColumn = document.createElement("td");
     newColumn.setAttribute("class", "available-bet");
-    count += 1;
-    newColumn.innerHTML = "Line " + count;
+    newColumn.innerHTML = sportData[i].sites[0].odds.h2h[1];
     newTableRow.appendChild(newColumn);
     newTable.appendChild(newTableRow);
     liveOddsContent.appendChild(newTable);
   };
+
   // logic that determines what text goes in the bet content container
   let availableBets = document.getElementsByClassName("available-bet");
-
+  console.log(availableBets.length);
   for (let i = 0; i < availableBets.length; i++) {
     document.getElementsByClassName("available-bet")[i].onclick = () => {
       console.log(document.getElementsByClassName("available-bet")[i].innerHTML);
+      // console.log(Math.floor(i / 2));
+      let newBet = document.createElement("p");
+      if (Math.floor(i / 2) % 2 === 0 || Math.floor(i / 2) === 0) {
+        newBet.innerHTML = sportData[Math.floor(i / 2)].teams[0];
+      } else if (Math.floor(i / 2) % 2 !== 0) {
+        newBet.innerHTML = sportData[Math.floor(i / 2)].teams[0];
+      }
+      if (document.getElementsByClassName("available-bet")[i].click()) {
+        textAlready = true;
+      } else if (document.getElementsByClassName("available-bet")[i].click() === false) {
+        textAlready = false;
+      }
+      document.getElementById("bet-slip-header").click();
+      let betsContainer = document.getElementById("bets-content-container");
+      betsContainer.innerHTML = '';
+      betsContainer.appendChild(newBet);
     };
   };
 };
@@ -127,59 +212,20 @@ document.getElementsByClassName("close")[1].onclick = () => {
 
 // function for capturing data from join modal
 document.getElementById("create-acct-button").onclick = () => {
-  console.log(document.getElementById("join-first-name").value.trim());
-  console.log(document.getElementById("join-last-name").value.trim());
-  console.log(document.getElementById("join-date-of-birth").value.trim());
-  console.log(document.getElementById("join-phone-number").value.trim());
-  console.log(document.getElementById("join-email").value.trim());
+  console.log(document.getElementById("join-username").value.trim());
   console.log(document.getElementById("join-password").value.trim());
-  console.log(document.getElementById("join-confirm-password").value.trim());
-  document.getElementById("join-first-name").value = '';
-  document.getElementById("join-last-name").value = '';
-  document.getElementById("join-date-of-birth").value = '';
-  document.getElementById("join-phone-number").value = '';
-  document.getElementById("join-email").value = '';
+  document.getElementById("join-username").value = '';
   document.getElementById("join-password").value = '';
-  document.getElementById("join-confirm-password").value = '';
   document.getElementById("joinModal").style.display = "none";
 };
 
 // function for capturing data from login modal
 document.getElementById("login-button").onclick = () => {
-  console.log(document.getElementById("login-email").value);
+  console.log(document.getElementById("login-username").value);
   console.log(document.getElementById("login-password").value);
-  document.getElementById("login-email").value = '';
+  document.getElementById("login-username").value = '';
   document.getElementById("login-password").value = '';
   document.getElementById("loginModal").style.display = "none";
-};
-
-// AJAX LOGIC
-let sportData;
-const tableData = (sport) => {
-  
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      console.log(JSON.parse(this.responseText));
-      // console.log(JSON.parse(this.responseText.data));
-    }
-  };
-  
-  if (sport === "none") {
-    xhttp.open("GET", "https://api.the-odds-api.com/v3/sports/?apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
-  } else if (sport === "football") {
-    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=americanfootball_nfl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
-  } else if (sport === "baseball") {
-    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=baseball_mlb&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
-  } else if (sport === "basketball") {
-    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=basketball_nba&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
-  } else if (sport === "soccer") {
-    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=soccer_epl&region=uk&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
-  } else if (sport === "hockey") {
-    xhttp.open("GET", "https://api.the-odds-api.com/v3/odds/?sport=icehockey_nhl&region=us&apiKey=dd6fdb1dbb22d4b22baa88050bcd18f2", true);
-  } 
-
-  xhttp.send();
 };
 
 // football table generator
@@ -191,7 +237,8 @@ const footballTables = () => {
   hockeyClicked = false;
   liveOddsContent = document.querySelector(".left-two-thirds-container");
   liveOddsContent.style.opacity = 0;
-  setTimeout(conditionalTableGen, 300);
+  footballAjax();
+  // setTimeout(conditionalTableGen, 300);
   setTimeout(opacity, 300);
 };
 
@@ -204,7 +251,8 @@ const soccerTables = () => {
   hockeyClicked = false;
   liveOddsContent = document.querySelector(".left-two-thirds-container");
   liveOddsContent.style.opacity = 0;
-  setTimeout(conditionalTableGen, 300);
+  soccerAjax();
+  // setTimeout(conditionalTableGen, 300);
   setTimeout(opacity, 300);
 };
 
@@ -217,7 +265,8 @@ const baseballTables = () => {
   hockeyClicked = false;
   liveOddsContent = document.querySelector(".left-two-thirds-container");
   liveOddsContent.style.opacity = 0;
-  setTimeout(conditionalTableGen, 300);
+  baseballAjax();
+  // setTimeout(conditionalTableGen, 300);
   setTimeout(opacity, 300);
 };
 
@@ -230,7 +279,8 @@ const basketballTables = () => {
   hockeyClicked = false;
   liveOddsContent = document.querySelector(".left-two-thirds-container");
   liveOddsContent.style.opacity = 0;
-  setTimeout(conditionalTableGen, 300);
+  basketballAjax();
+  // setTimeout(conditionalTableGen, 300);
   setTimeout(opacity, 300);
 };
 
@@ -243,7 +293,8 @@ const hockeyTables = () => {
   hockeyClicked = true;
   liveOddsContent = document.querySelector(".left-two-thirds-container");
   liveOddsContent.style.opacity = 0;
-  setTimeout(conditionalTableGen, 300);
+  hockeyAjax();
+  // setTimeout(conditionalTableGen, 300);
   setTimeout(opacity, 300);
 };
 
@@ -261,36 +312,35 @@ window.onload = () => {
   welcomeText.innerHTML = "Select a sport above to view live odds!";
   liveOddsContent.appendChild(welcomeText);
   liveOddsContent.style.opacity = 1;
-  tableData("none");
 };
 
 // load live football odds when football button is clicked
 document.getElementById("football-button").onclick = () => {
-  tableData("football");
+  // footballAjax();
   footballTables();
 };
 
 // load live soccer odds when soccer button is clicked
 document.getElementById("soccer-button").onclick = () => {
-  tableData("soccer");
+  // soccerAjax();
   soccerTables();
 };
 
 // load live baseball odds when baseball button is clicked
 document.getElementById("baseball-button").onclick = () => {
-  tableData("baseball");
+  // baseballAjax();
   baseballTables();
 };
 
 // load live basketball odds when basketball button is clicked
 document.getElementById("basketball-button").onclick = () => {
-  tableData("basketball");
+  // basketballAjax();
   basketballTables();
 };
 
 // load live hockey odds when hockey button is clicked
 document.getElementById("hockey-button").onclick = () => {
-  tableData("hockey");
+  // hockeyAjax();
   hockeyTables();
 };
 
@@ -301,7 +351,9 @@ const fadeBetContent = () => {
 
 // function to make text fade in
 const textAppear = (string) => {
-  document.getElementById("select-option").innerHTML = string;
+  if (textAlready === false) {
+    document.getElementById("select-option").innerHTML = string;
+  }
 };
 
 // these two function will toggle between the bet slip and the open bets tab on the right side of the homepage
