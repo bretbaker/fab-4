@@ -169,6 +169,13 @@ const conditionalTableGen = () => {
       let newBetDiv = document.createElement("div");
       newBetDiv.setAttribute("class", "new-bet-div");
       newBetDiv.setAttribute("value", i);
+      let cancelBet = document.createElement("p");
+      cancelBet.setAttribute("class", "cancel-bet");
+      cancelBet.innerHTML = "x";
+      newBetDiv.appendChild(cancelBet);
+      cancelBet.addEventListener("click", function () {
+        newBetDiv.innerHTML = '';
+      });
       let newBet1 = document.createElement("p");
       newBet1.innerHTML = betTeams[i].innerHTML + " to Win";
       newBetDiv.appendChild(newBet1);
@@ -190,16 +197,16 @@ const conditionalTableGen = () => {
       betSubmitBtn.setAttribute("value", i);
       betSubmitBtn.innerHTML = "Submit";
       newBetDiv.appendChild(betSubmitBtn);
+      betSubmitBtn.addEventListener("click", function () {
+        newBetDiv.innerHTML = '';
+      });
       let newBet7 = document.createElement("hr");
       newBetDiv.appendChild(newBet7);
       document.getElementById("bets-content-container").appendChild(newBetDiv);
-      for (let j = 0; j < betSubmitBtn.length; j++) {
-        betSubmitBtn[j].addEventListener("click", function () {
-          newBetDiv.value(j).innerHTML = '';
-        });
-      };
     });
   };
+
+  setTimeout(opacity, 300);
 
 };
 
@@ -217,6 +224,20 @@ const refreshBtn = () => {
   refreshIcon.setAttribute("class", "fas fa-redo");
   refreshButton.appendChild(refreshIcon);
   liveOddsContent.appendChild(refreshButton);
+  refreshButton.addEventListener("click", function() {
+    liveOddsContent.style.opacity = 0;
+    if (footballClicked) {
+      footballAjax();
+    } else if (baseballClicked) {
+      baseballAjax();
+    } else if (basketballClicked) {
+      basketballAjax();
+    } else if (soccerClicked) {
+      soccerAjax();
+    } else if (hockeyClicked) {
+      hockeyAjax();
+    }
+  });
 }
 
 // functions for join modal pop-up
@@ -269,7 +290,7 @@ const footballTables = () => {
   liveOddsContent.style.opacity = 0;
   footballAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // soccer table generator
@@ -283,7 +304,7 @@ const soccerTables = () => {
   liveOddsContent.style.opacity = 0;
   soccerAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // baseball table generator
@@ -297,7 +318,7 @@ const baseballTables = () => {
   liveOddsContent.style.opacity = 0;
   baseballAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // basketball table generator
@@ -311,7 +332,7 @@ const basketballTables = () => {
   liveOddsContent.style.opacity = 0;
   basketballAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // basketball table generator
@@ -325,7 +346,7 @@ const hockeyTables = () => {
   liveOddsContent.style.opacity = 0;
   hockeyAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // load live football odds as default on home page

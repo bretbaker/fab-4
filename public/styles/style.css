@@ -297,6 +297,21 @@ input {
   margin-bottom: 20px;
 }
 
+.cancel-bet {
+  color: white;
+  font-size: 1.25rem;
+  float: right;
+  text-shadow: 1px 1px 1px black;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transform-origin: center;
+} .cancel-bet:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+} .cancel-bet:active {
+  transform: scale(1.2, 1.2);
+}
+
 .bet-submit-button {
   background-color: dodgerblue;
   color: white;
