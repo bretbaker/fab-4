@@ -60,6 +60,15 @@ input {
   transform: scale(1.35, 1.35);
 }  
 
+
+.welcome-text {
+  font-size: 2.5rem;
+  color: white;
+  text-align: center;
+  margin: 10px;
+  text-shadow: 1px 1px 1px black;
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -130,6 +139,7 @@ input {
   padding: 10px;
   background-color: white;
   border-bottom: solid 1px black;
+  text-align: center;
 }
 
 .modal-footer {
@@ -197,6 +207,7 @@ input {
 }
 
 .left-two-thirds-container {
+  opacity: 0;
   width: 590px;
   display: inline-block;
   background-color: dodgerblue;
@@ -205,6 +216,11 @@ input {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 3px 3px 3px black;
+  -webkit-transition: opacity 300ms;
+   -moz-transition: opacity 300ms;
+   -ms-transition: opacity 300ms;
+   -o-transition: opacity 300ms;
+   transition: opacity 300ms;
 }
 
 .refresh-button {
@@ -245,6 +261,18 @@ input {
   line-height: 1.5rem;
   background-color: white;
   color: black;
+  font-weight: bold;
+}
+
+.available-bet {
+  transition-property: background-color;
+  transition-duration: 100ms;
+  font-family: sans-serif;
+} .available-bet:hover {
+  cursor: pointer;
+  background-color: rgba(30, 144, 255, 0.3);
+} .available-bet:active {
+  background-color: rgba(30, 144, 255, 0.6);
 }
 
 .right-one-third-container {
@@ -267,14 +295,6 @@ input {
   padding-bottom: 10px;
   border-bottom: solid white 2px;
   margin-bottom: 20px;
-}
-
-.bet-slip-content-container {
-  width: 95%;
-  margin: 0 auto;
-  /* text-shadow: 0.5px 0.5px 0.5px black;  */
-  font-weight: bold;
-  line-height: 2rem;
 }
 
 .bet-label {
@@ -363,6 +383,19 @@ input {
   transform: scale(1.2, 1.2);
 }
 
+#bets-content-container {
+  width: 95%;
+  margin: 0 auto;
+  font-weight: bold;
+  line-height: 2rem;
+  opacity: 1;
+   -webkit-transition: opacity 300ms;
+   -moz-transition: opacity 300ms;
+   -ms-transition: opacity 300ms;
+   -o-transition:opacity 300ms;
+   transition: opacity 300ms;
+}
+
 #create-acct-button {
   background-color: dodgerblue;
   color: white;
@@ -403,4 +436,19 @@ input {
   transform: scale(1.1, 1.1);
 } #login-button:active {
   transform: scale(1.2, 1.2);
+}
+
+#footer {
+  width: 960px;
+  margin: 20px auto;
+}
+
+#footer-link {
+  color: white;
+  font-family: sans-serif;
+  text-decoration: none;
+} #footer-link:hover {
+  text-decoration: underline;
+} #footer-link:active {
+  color: dodgerblue;
 }
