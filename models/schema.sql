@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS fab4db;
 CREATE DATABASE fab4db;
 USE fab4db;
+USE m19rvgz1bxxhr9n9;
 
 -- DROP DATABASE IF EXISTS testdb;
 -- CREATE DATABASE testdb;
