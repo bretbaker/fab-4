@@ -108,69 +108,106 @@ const conditionalTableGen = () => {
   liveOddsContent.appendChild(document.createElement("hr"));
  
   for (let i = 0; i < sportData.length; i++) {
+    if (sportData[i].sites.length > 0) {
+      // start of table
+      let newTable = document.createElement("table");
+      newTable.setAttribute("class", "live-odds-table");
+
+      // table head row
+      let newTableRow = document.createElement("tr");
+      let newColumn = document.createElement("th");
+      newColumn.innerHTML = moment.unix(sportData[i].commence_time).format('MMMM Do YYYY, h:mm:ss a');
+      newTableRow.appendChild(newColumn);
+      newColumn = document.createElement("th");
+      newColumn.innerHTML = "Head-to-Head";
+      newTableRow.appendChild(newColumn);
+      newTable.appendChild(newTableRow);
+
+      // table body row 1
+      newTableRow = document.createElement("tr");
+      newColumn = document.createElement("td");
+      newColumn.innerHTML = sportData[i].teams[0];
+      newColumn.setAttribute("class", "bet-team");
+      newTableRow.appendChild(newColumn);
+      newColumn = document.createElement("td");
+      newColumn.setAttribute("class", "available-bet");
+      newColumn.innerHTML = sportData[i].sites[0].odds.h2h[0];
+      newTableRow.appendChild(newColumn);
+      newTable.appendChild(newTableRow);
+
+      // table body row 2
+      newTableRow = document.createElement("tr");
+      newColumn = document.createElement("td");
+      newColumn.innerHTML = sportData[i].teams[1];
+      newColumn.setAttribute("class", "bet-team");
+      newTableRow.appendChild(newColumn);
+      newColumn = document.createElement("td");
+      newColumn.setAttribute("class", "available-bet");
+      newColumn.innerHTML = sportData[i].sites[0].odds.h2h[1];
+      newTableRow.appendChild(newColumn);
+      newTable.appendChild(newTableRow);
+      liveOddsContent.appendChild(newTable);
+    } else {
+      console.log("No odds data for object: " + i);
+    }
     
-    // start of table
-    let newTable = document.createElement("table");
-    newTable.setAttribute("class", "live-odds-table");
-    
-    // table head row
-    let newTableRow = document.createElement("tr");
-    let newColumn = document.createElement("th");
-    newColumn.innerHTML = moment.unix(sportData[i].commence_time).format('MMMM Do YYYY, h:mm:ss a');
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("th");
-    newColumn.innerHTML = "Head-to-Head";
-    newTableRow.appendChild(newColumn);
-    newTable.appendChild(newTableRow);
-    
-    // table body row 1
-    newTableRow = document.createElement("tr");
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = sportData[i].teams[0];
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.setAttribute("class", "available-bet");
-    newColumn.innerHTML = sportData[i].sites[0].odds.h2h[0];
-    newTableRow.appendChild(newColumn);
-    newTable.appendChild(newTableRow);
-    
-    // table body row 2
-    newTableRow = document.createElement("tr");
-    newColumn = document.createElement("td");
-    newColumn.innerHTML = sportData[i].teams[1];
-    newTableRow.appendChild(newColumn);
-    newColumn = document.createElement("td");
-    newColumn.setAttribute("class", "available-bet");
-    newColumn.innerHTML = sportData[i].sites[0].odds.h2h[1];
-    newTableRow.appendChild(newColumn);
-    newTable.appendChild(newTableRow);
-    liveOddsContent.appendChild(newTable);
   };
 
   // logic that determines what text goes in the bet content container
   let availableBets = document.getElementsByClassName("available-bet");
+  let betTeams = document.getElementsByClassName("bet-team");
   console.log(availableBets.length);
+
+  let betSubmitBtn;
   for (let i = 0; i < availableBets.length; i++) {
-    document.getElementsByClassName("available-bet")[i].onclick = () => {
-      console.log(document.getElementsByClassName("available-bet")[i].innerHTML);
-      // console.log(Math.floor(i / 2));
-      let newBet = document.createElement("p");
-      if (Math.floor(i / 2) % 2 === 0 || Math.floor(i / 2) === 0) {
-        newBet.innerHTML = sportData[Math.floor(i / 2)].teams[0];
-      } else if (Math.floor(i / 2) % 2 !== 0) {
-        newBet.innerHTML = sportData[Math.floor(i / 2)].teams[0];
-      }
-      if (document.getElementsByClassName("available-bet")[i].click()) {
-        textAlready = true;
-      } else if (document.getElementsByClassName("available-bet")[i].click() === false) {
-        textAlready = false;
-      }
+    availableBets[i].addEventListener("click", function () {
+      console.log(availableBets[i].innerHTML);
+      console.log(betTeams[i].innerHTML);
+      textAlready = true;
       document.getElementById("bet-slip-header").click();
-      let betsContainer = document.getElementById("bets-content-container");
-      betsContainer.innerHTML = '';
-      betsContainer.appendChild(newBet);
-    };
+      document.getElementById("select-option").innerHTML = '';
+      let newBetDiv = document.createElement("div");
+      newBetDiv.setAttribute("class", "new-bet-div");
+      newBetDiv.setAttribute("value", i);
+      let cancelBet = document.createElement("p");
+      cancelBet.setAttribute("class", "cancel-bet");
+      cancelBet.innerHTML = "x";
+      newBetDiv.appendChild(cancelBet);
+      cancelBet.addEventListener("click", function () {
+        newBetDiv.innerHTML = '';
+      });
+      let newBet1 = document.createElement("p");
+      newBet1.innerHTML = betTeams[i].innerHTML + " to Win";
+      newBetDiv.appendChild(newBet1);
+      let newBet2 = document.createElement("p");
+      newBet2.innerHTML = "Odds: " + availableBets[i].innerHTML;
+      newBetDiv.appendChild(newBet2);
+      let newBet3 = document.createElement("hr");
+      newBetDiv.appendChild(newBet3);
+      let newBet4 = document.createElement("p");
+      newBet4.innerHTML = "1 Bet at $100.00";
+      newBetDiv.appendChild(newBet4);
+      let newBet5 = document.createElement("p");
+      newBet5.innerHTML = "Potential Winnings: $" + (availableBets[i].innerHTML * 100).toFixed(2);
+      newBetDiv.appendChild(newBet5);
+      let newBet6 = document.createElement("hr");
+      newBetDiv.appendChild(newBet6);
+      betSubmitBtn = document.createElement("p");
+      betSubmitBtn.setAttribute("class", "bet-submit-button");
+      betSubmitBtn.setAttribute("value", i);
+      betSubmitBtn.innerHTML = "Submit";
+      newBetDiv.appendChild(betSubmitBtn);
+      betSubmitBtn.addEventListener("click", function () {
+        newBetDiv.innerHTML = '';
+      });
+      let newBet7 = document.createElement("hr");
+      newBetDiv.appendChild(newBet7);
+      document.getElementById("bets-content-container").appendChild(newBetDiv);
+    });
   };
+
+  setTimeout(opacity, 300);
+
 };
 
 // opacity function
@@ -187,6 +224,20 @@ const refreshBtn = () => {
   refreshIcon.setAttribute("class", "fas fa-redo");
   refreshButton.appendChild(refreshIcon);
   liveOddsContent.appendChild(refreshButton);
+  refreshButton.addEventListener("click", function() {
+    liveOddsContent.style.opacity = 0;
+    if (footballClicked) {
+      footballAjax();
+    } else if (baseballClicked) {
+      baseballAjax();
+    } else if (basketballClicked) {
+      basketballAjax();
+    } else if (soccerClicked) {
+      soccerAjax();
+    } else if (hockeyClicked) {
+      hockeyAjax();
+    }
+  });
 }
 
 // functions for join modal pop-up
@@ -239,7 +290,7 @@ const footballTables = () => {
   liveOddsContent.style.opacity = 0;
   footballAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // soccer table generator
@@ -253,7 +304,7 @@ const soccerTables = () => {
   liveOddsContent.style.opacity = 0;
   soccerAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // baseball table generator
@@ -267,7 +318,7 @@ const baseballTables = () => {
   liveOddsContent.style.opacity = 0;
   baseballAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // basketball table generator
@@ -281,7 +332,7 @@ const basketballTables = () => {
   liveOddsContent.style.opacity = 0;
   basketballAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // basketball table generator
@@ -295,7 +346,7 @@ const hockeyTables = () => {
   liveOddsContent.style.opacity = 0;
   hockeyAjax();
   // setTimeout(conditionalTableGen, 300);
-  setTimeout(opacity, 300);
+  // setTimeout(opacity, 300);
 };
 
 // load live football odds as default on home page
